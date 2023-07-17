@@ -1,0 +1,7 @@
+body {
+  margin: auto;
+  padding: auto;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
