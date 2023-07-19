@@ -28,6 +28,7 @@ let elapsedTime = 0
 let score = 0
 let gameLength = 30
 let highscore = 0
+let played = false
 
 //getting highscore from local Storage
 if (localStorage.getItem("highscore") === null){
@@ -70,6 +71,7 @@ function update() {
         playing = true
         officialTime = 0
         startTime = Date.now();
+        played = true
     }
     if(playing){
         //moving hands
@@ -141,7 +143,7 @@ function draw(timeStamp) {
     ctx.textAlign = "center"
     ctx.font = "30px Arial";
     ctx.fillStyle="grey"
-    if(playing){
+    if(playing && played){
         ctx.fillText(Math.round((gameLength-elapsedTime/1000)*1000)/1000, canvas.width/2, 300);
         ctx.fillText(score, canvas.width/2, 340);
         for (let i = 0; i < soap.length; i+=2) {
@@ -153,9 +155,15 @@ function draw(timeStamp) {
         ctx.drawImage(soapDispenser, i*gameWidth/numOfDispensers+30, dispenserY, dispenserWidth, dispenserHeight);
     }
     
-    if(!playing){
+    if(!playing && played){
         ctx.fillText("Score: " + score, canvas.width/2, 300);
         ctx.fillText("Highscore: " + highscore, canvas.width/2, 340);
+    }
+
+    if(!playing && !played){
+        ctx.fillText("Catch As Many Soap Drops As Possible", canvas.width/2, 300);
+        ctx.fillText("Use Arrow Keys To Control Hands", canvas.width/2, 340);
+        ctx.fillText("Press Space To Start", canvas.width/2, 380);
     }
 
     ctx.drawImage(hands, hand.x, hand.y, handWidth, handHeight);
